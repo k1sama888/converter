@@ -24,7 +24,7 @@ func isMorse(s string) bool {
 	replacer := strings.NewReplacer(".", "", "-", "", " ", "", "/", "")
 	return replacer.Replace(s) == ""
 }
-func morseToText(morseStr string) (string, error) {
+func ToText(morseStr string) (string, error) {
 	var unknown []string
 	c := morse.NewConverter(
 		morse.DefaultMorse,
@@ -32,7 +32,6 @@ func morseToText(morseStr string) (string, error) {
 		morse.WithWordSeparator("   "),
 		morse.WithTrailingSeparator(false),
 		morse.WithHandler(func(err error) string {
-			// запоминаем неизвестный код и ничего не вставляем
 			if e, ok := err.(morse.ErrNoEncoding); ok {
 				unknown = append(unknown, e.Text)
 			}
@@ -51,7 +50,7 @@ func morseToText(morseStr string) (string, error) {
 
 	return result, nil
 }
-func textToMorse(text string) (string, error) {
+func ToMorse(text string) (string, error) {
 	var unknown []string
 
 	c := morse.NewConverter(
